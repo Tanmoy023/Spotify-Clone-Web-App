@@ -11,7 +11,7 @@ let currFolder
 
 // function for display all the albums dynamicaly
 async function displayAlbums() {
-    let a = await fetch(`songs/`)
+    let a = await fetch(`http://127.0.0.1:5500/no84_Spotify/Songs/`)
     let response = await a.text();
     let div = document.createElement("div")
     div.innerHTML = response;
@@ -19,17 +19,17 @@ async function displayAlbums() {
     let array = Array.from(fHref)
     for (let index = 0; index < array.length; index++) {
         const e = array[index];
-        if (e.href.includes("/songs/")) {
-            let folder = decodeURI(e.href.split("/songs/")[1]);
+        if (e.href.includes("/Songs/")) {
+            let folder = decodeURI(e.href.split("/Songs/")[1]);
             // take meta deta of each folder
-            let a = await fetch(`songs/${folder}/info.json`)
+            let a = await fetch(`http://127.0.0.1:5500/no84_Spotify/Songs/${folder}/info.json`)
             let response = await a.json();
             cardContainer.innerHTML = cardContainer.innerHTML + `
                 <div data-folder="${folder}" class="card">
                     <div class="play">
-                        <img src="svg/pause.svg" alt="play">
+                        <img src="/no84_Spotify/svg/pause.svg" alt="play">
                     </div>
-                    <img src="songs/${folder}/cover.jpg" alt="SongPhoto">
+                    <img src="/no84_Spotify/Songs/${folder}/cover.jpg" alt="SongPhoto">
                     <div class="cardInfo">
                         <h5>${response.title}</h5>
                         <p>${response.description}</p>
@@ -55,7 +55,7 @@ function cardClick() {
 // function for get all songs form a specific folder
 async function getSongs(folder) {
     currFolder = folder
-    let a = await fetch(`songs/${folder}/`)
+    let a = await fetch(`http://127.0.0.1:5500/no84_Spotify/Songs/${folder}/`)
     let response = await a.text();
     let div = document.createElement("div")
     div.innerHTML = response;
@@ -64,8 +64,8 @@ async function getSongs(folder) {
     for (let index = 0; index < as.length; index++) {
         const element = as[index];
         if (element.href.endsWith(".mp3")) {
-            songs.push(element.href.split(`/songs/${folder}/`)[1])
-            // console.log(">>"+element.href.split(`/songs/${folder}/`)[1]);
+            songs.push(element.href.split(`/Songs/${folder}/`)[1])
+            // console.log(">>"+element.href.split(`/Songs/${folder}/`)[1]);
         }
     }
 }
@@ -85,15 +85,15 @@ async function addSongs() {
         
     <li>
     <div class="songInfo">
-        <div class="songName"><img src="svg/mysic.svg" alt="Music">
+        <div class="songName"><img src="/no84_Spotify/svg/mysic.svg" alt="Music">
             <span>${songName}</span>
         </div>
-        <div class="songArtist"><img src="svg/microphone.svg" alt="microphone">
+        <div class="songArtist"><img src="/no84_Spotify/svg/microphone.svg" alt="microphone">
             <span>${artistName}</span>
         </div>
     </div>
     <div>
-        <img class="playSong" src="svg/pause.svg" alt="play">
+        <img class="playSong" src="/no84_Spotify/svg/pause.svg" alt="play">
     </div>
     </li>`;
     }
